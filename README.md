@@ -27,4 +27,21 @@ Website: https://r-hub.github.io/containers/
 
 Website: https://rocker-project.org/images/
 
+To build
+
+```sh
+docker build --platform=linux/amd64 --tag corefast:latest.
+```
+
+To run:
+
+```sh
+docker run \
+  --platform=linux/amd64 \
+  --rm \
+  --ti \
+  -v "$(pwd)":"/site" \
+  corefast build
+```
+
 

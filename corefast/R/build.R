@@ -1,4 +1,4 @@
 #' @export
-build <- function() {
-  rmarkdown::render_site(encoding = "UTF-8")
+build <- function(path) {
+  rmarkdown::render_site(path, encoding = "UTF-8")
 }

@@ -1,8 +1,9 @@
 #!/bin/bash -l
 set -e
+pwd
 case $1 in 
   "build")
-      Rscript -e "corefast::build()"
+      Rscript -e "corefast::build('site')"
   ;;
   "hello")
       Rscript -e "corefast::hello()"
