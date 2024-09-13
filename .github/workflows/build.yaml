@@ -12,8 +12,8 @@ jobs:
       volumes:
         - ${{ github.workspace }}:/site
     steps:
-      id: hi
-      run: corefast::hello()
+      - id: hi
+        run: corefast::hello()
 
   
 
