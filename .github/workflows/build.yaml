@@ -14,10 +14,8 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@v4
-        with:
-          path: /site
       - id: hi
-        run: Rscript -e "corefast::hello()" && Rscript -e "list.files('/site')"
+        run: Rscript -e "corefast::hello(); list.files(); list.files('/site')"
       - id: build
         run: Rscript -e "corefast::build('/site')"
 
