@@ -25,13 +25,13 @@ jobs:
           path: _site
       - id: list-outputs
         run: |
-          echo "source"
+          echo "-----source"
           ls
-          echo "output"
+          echo "-----output"
           ls _site
-          echo "pages"
+          echo "-----pages"
           ls pages
-          echo "git status"
+          echo "-----git status"
           (cd pages && git status)
 
   
