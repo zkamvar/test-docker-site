@@ -36,7 +36,7 @@ jobs:
           ls pages
           cp -R _site/* pages
           echo "-----adding stuff"
-          (cd pages && git add . && git commit --amend -m 'deploy' && git push)
+          cd pages && git add . && git commit --amend -m 'deploy' && git push --force
 
   
 
