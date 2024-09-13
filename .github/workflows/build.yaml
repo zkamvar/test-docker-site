@@ -17,6 +17,7 @@ jobs:
       - id: checkout-pages
         uses: actions/checkout@v4
         with:
+          branch: gh-pages
           path: _site
       - id: hi
         run: Rscript -e "corefast::hello(); list.files(); list.files('/site')"
@@ -24,8 +25,11 @@ jobs:
         run: Rscript -e "corefast::build('/site')"
       - id: list-outputs
         run: |
+          echo "source"
           ls
+          echo "output"
           ls _site
+          echo "git status"
           (cd _site && git status)
 
   
