@@ -21,7 +21,7 @@ jobs:
       - id: checkout-pages
         uses: actions/checkout@v4
         with:
-          branch: gh-pages
+          ref: gh-pages
           path: pages
       - id: list-outputs
         run: |
