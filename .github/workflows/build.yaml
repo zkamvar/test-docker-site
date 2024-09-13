@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           branch: gh-pages
-          path: _site
+          path: pages
       - id: list-outputs
         run: |
           echo "-----source"
