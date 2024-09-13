@@ -25,6 +25,8 @@ jobs:
           path: pages
       - id: list-outputs
         run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
           echo "-----source"
           ls
           echo "-----output"
@@ -33,7 +35,7 @@ jobs:
           ls pages
           cp -R _site/* pages
           echo "-----git status"
-          (cd pages && git status)
+          (cd pages && git add . && git commit --amend -m 'deploy' && git push)
 
   
 
