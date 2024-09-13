@@ -1,0 +1,19 @@
+name: CI
+on:
+  push:
+    branches: [ main ]
+jobs:
+  container-test-job:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/zkamvar/test-docker-site:main
+      ports:
+        - 80
+      volumes:
+        - ${{ github.workspace }}:/site
+    steps:
+      id: hi
+      run: corefast::hello()
+
+  
+
