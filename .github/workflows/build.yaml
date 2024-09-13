@@ -13,9 +13,9 @@ jobs:
         - ${{ github.workspace }}:/site
     steps:
       - id: hi
-        run: Rscript -e "corefast::hello()" && Rscript -e "list.files('site')"
+        run: Rscript -e "corefast::hello()" && Rscript -e "list.files('/site')"
       - id: build
-        run: Rscript -e "corefast::build('site')"
+        run: Rscript -e "corefast::build('/site')"
 
   
 
