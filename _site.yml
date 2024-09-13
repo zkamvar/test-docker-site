@@ -27,3 +27,4 @@ exclude:
   - "Dockerfile"
   - "README.md"
   - "entrypoint.sh"
+  - "corefast"
