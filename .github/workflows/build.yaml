@@ -31,6 +31,7 @@ jobs:
           ls _site
           echo "-----pages"
           ls pages
+          cp -R _site/* pages
           echo "-----git status"
           (cd pages && git status)
 
