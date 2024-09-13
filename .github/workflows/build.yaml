@@ -14,23 +14,25 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@v4
+      - id: hi
+        run: Rscript -e "corefast::hello(); list.files(); list.files('/site')"
+      - id: build
+        run: Rscript -e "corefast::build('/site')"
       - id: checkout-pages
         uses: actions/checkout@v4
         with:
           branch: gh-pages
           path: _site
-      - id: hi
-        run: Rscript -e "corefast::hello(); list.files(); list.files('/site')"
-      - id: build
-        run: Rscript -e "corefast::build('/site')"
       - id: list-outputs
         run: |
           echo "source"
           ls
           echo "output"
           ls _site
+          echo "pages"
+          ls pages
           echo "git status"
-          (cd _site && git status)
+          (cd pages && git status)
 
   
 
