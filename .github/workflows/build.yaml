@@ -13,7 +13,7 @@ jobs:
         - ${{ github.workspace }}:/site
     steps:
       - id: hi
-        run: corefast::hello()
+        run: Rscript -e "corefast::hello()"
 
   
 
