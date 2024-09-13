@@ -18,6 +18,11 @@ jobs:
         run: Rscript -e "corefast::hello(); list.files(); list.files('/site')"
       - id: build
         run: Rscript -e "corefast::build('/site')"
+      - id: checkout
+        uses: actions/checkout@v4
+        with:
+          path: pages
+          ref: gh-pages
       - id: list-outputs
         run: |
           git config --global user.name "${{ github.actor }}"
@@ -25,7 +30,6 @@ jobs:
           git config --global --add safe.directory /__w/test-docker-site/test-docker-site
           git remote set-url origin \
           https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          git worktree add pages gh-pages
           echo "-----source"
           ls
           echo "-----output"
@@ -36,7 +40,6 @@ jobs:
           echo "-----adding stuff"
           cd pages && git add . && git commit --amend -m 'deploy' && git push --force
           cd -
-          git worktree remove gh-pages
 
   
 
