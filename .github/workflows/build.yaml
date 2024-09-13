@@ -18,7 +18,7 @@ jobs:
         run: Rscript -e "corefast::hello(); list.files(); list.files('/site')"
       - id: build
         run: Rscript -e "corefast::build('/site')"
-      - id: checkout
+      - id: checkout-pages
         uses: actions/checkout@v4
         with:
           path: pages
