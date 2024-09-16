@@ -39,10 +39,6 @@ jobs:
           name: 'site'
       - id: publish
         run: |
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor_id}}+${{ github.actor }}@users.noreply.github.com"
-          git remote set-url origin \
-          https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           echo "-----source"
           unzip site
           ls
@@ -52,7 +48,12 @@ jobs:
           ls pages
           cp -R _site pages
           echo "-----adding stuff"
-          cd pages && git add . && git commit --amend -m 'deploy' && git push --force
+          cd pages
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor_id}}+${{ github.actor }}@users.noreply.github.com"
+          git remote set-url origin \
+          https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git add . && git commit --amend -m 'deploy' && git push --force
           cd -
 
   
