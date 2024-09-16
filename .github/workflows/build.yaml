@@ -31,7 +31,6 @@ jobs:
       - id: checkout-pages
         uses: actions/checkout@v4
         with:
-          path: pages
           ref: gh-pages
       - id: fetch-artifact
         uses: actions/download-artifact@v4
@@ -41,21 +40,19 @@ jobs:
         run: |
           echo "-----source"
           ls
-          unzip site
-          ls
-          echo "-----output"
-          ls _site
-          echo "-----pages"
-          ls pages
-          cp -R _site pages
+          # echo "-----output"
+          # ls _site
+          # echo "-----pages"
+          # ls pages
+          # cp -R _site pages
           echo "-----adding stuff"
-          cd pages
+          # cd pages
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor_id}}+${{ github.actor }}@users.noreply.github.com"
           git remote set-url origin \
           https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add . && git commit --amend -m 'deploy' && git push --force
-          cd -
+          # cd -
 
   
 
