@@ -24,7 +24,6 @@ jobs:
         with:
           name: 'site'
           path: '/site'
-jobs:
   push:
     runs-on: ubuntu-latest
     steps:
