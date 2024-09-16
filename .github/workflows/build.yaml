@@ -3,7 +3,7 @@ on:
   push:
     branches: [ main ]
 jobs:
-  container-test-job:
+  build:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/zkamvar/test-docker-site:main
@@ -25,7 +25,7 @@ jobs:
           name: 'site'
           path: '/site'
 jobs:
-  container-test-job:
+  push:
     runs-on: ubuntu-latest
     steps:
       - id: checkout-pages
