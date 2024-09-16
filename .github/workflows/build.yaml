@@ -37,24 +37,20 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: 'site'
+          path: 'pages'
       - id: publish
         run: |
-          echo "-----source"
-          touch .nojekyll
-          ls
-          # echo "-----output"
-          # ls _site
-          # echo "-----pages"
-          # ls pages
-          # cp -R _site pages
-          echo "-----adding stuff"
-          # cd pages
+          cd pages
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor_id}}+${{ github.actor }}@users.noreply.github.com"
           git remote set-url origin \
           https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          # remove everything in the old site
+          git rm -r '*'
+          git restore .
+          cp -R ../_site .
+          touch .nojekyll
           git add . && git commit --amend -m 'deploy' && git push --force
-          # cd -
 
   
 
