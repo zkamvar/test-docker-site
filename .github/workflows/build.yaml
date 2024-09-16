@@ -18,25 +18,39 @@ jobs:
         run: Rscript -e "corefast::hello(); list.files(); list.files('/site')"
       - id: build
         run: Rscript -e "corefast::build('/site')"
+      - name: Upload artifact
+        id: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: 'site'
+          path: '/site'
+jobs:
+  container-test-job:
+    runs-on: ubuntu-latest
+    steps:
       - id: checkout-pages
         uses: actions/checkout@v4
         with:
           path: pages
           ref: gh-pages
-      - id: list-outputs
+      - id: fetch-artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: 'site'
+      - id: publish
         run: |
           git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@umass.edu"
-          git config --global --add safe.directory /__w/test-docker-site/test-docker-site
+          git config --global user.email "${{ github.actor_id}}+${{ github.actor }}@users.noreply.github.com"
           git remote set-url origin \
           https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           echo "-----source"
+          unzip site
           ls
           echo "-----output"
           ls _site
           echo "-----pages"
           ls pages
-          cp -R _site/* pages
+          cp -R _site pages
           echo "-----adding stuff"
           cd pages && git add . && git commit --amend -m 'deploy' && git push --force
           cd -
