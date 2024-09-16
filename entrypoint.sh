@@ -13,5 +13,5 @@ set -e
 #   ;;
 # esac
 
-echo "use `Rscript -e \"corefast::build('site')\"` to build!"
+echo "use Rscript -e \"corefast::build('site')\" to build!"
 bash

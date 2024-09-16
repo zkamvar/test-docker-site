@@ -29,7 +29,7 @@ a:focus {
     background-color: #002858;
 }
 
-.bigButton {
+.button {
   color: #ffffff;
   padding: 20px 40px;
   font-size: 20px;
@@ -40,12 +40,12 @@ a:focus {
   margin: 5px;
 }
 
-.bigButton.forecasts {
+.button.forecasts {
   color: #fff;
   background-color: #003a80;
 }
 
-.bigButton.reports {
+.button.reports {
   color: #fff;
   background-color: #64a621;
 }

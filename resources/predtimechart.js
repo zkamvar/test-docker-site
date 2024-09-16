@@ -1,32 +1,3 @@
----
-title: "forecast"
----
-
-<style>
-div.main-container {
-    max-width: none;
-}
-body{
-    padding-bottom: 0px;
-}
-.title{
-    display: none;
-}
-
-.main-content{
-    /* padding-top: 45px; */
-    height: 100%
-}
-.alert {
-  font-size: 15px;
-}
-</style>
-
-
-<div id="forecastViz_row" class="row">
-    <!-- the div passed to predtimechart initialize(), which populates all DOM elements -->
-</div>
-<script type = "module">
 import App from 'https://cdn.jsdelivr.net/gh/reichlab/predtimechart@2.0.9/dist/predtimechart.bundle.js';
 
 const covid19ForecastsVizTestOptions = {
@@ -135,7 +106,11 @@ function _fetchData(isForecast, targetKey, taskIDs, referenceDate) {
 
 // componentDiv, _fetchData, isIndicateRedraw, options, _calcUemForecasts:
 App.initialize('forecastViz_row', _fetchData, false, covid19ForecastsVizTestOptions, null);
-</script>
 
-
-
+// ZNK 2024-09-16: update for bootstrap 5
+document.addEventListener('DOMContentLoaded', function() {
+  var opts = document.getElementById("forecastViz_options");
+  var viz  = document.getElementById("forecastViz_viz");
+  opts.classList.add("g-col-3");
+  viz.classList.add("g-col-9");
+})

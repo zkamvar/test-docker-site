@@ -17,10 +17,8 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@v4
-      - id: hi
-        run: Rscript -e "corefast::hello(); list.files(); list.files('/site')"
       - id: build
-        run: Rscript -e "corefast::build('/site')"
+        run: quarto render
       - name: Upload artifact
         id: upload
         uses: actions/upload-artifact@v4
