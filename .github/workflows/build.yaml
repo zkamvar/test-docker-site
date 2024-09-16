@@ -40,6 +40,7 @@ jobs:
       - id: publish
         run: |
           echo "-----source"
+          ls
           unzip site
           ls
           echo "-----output"
