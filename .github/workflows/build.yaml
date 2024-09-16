@@ -47,6 +47,7 @@ jobs:
           https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           ls
           git status
+          git add .
           # remove everything in the old site
           git rm -r "*"
           git restore .
