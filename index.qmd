@@ -6,4 +6,13 @@ This is a Quarto website.
 
 To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
 
+Authors can use $\LaTeX$ to write equations and even put in callouts:
+
+:::{.callout-note}
+
+Look at this note!
+
+:::
+
+
 

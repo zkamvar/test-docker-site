@@ -14,20 +14,28 @@ RUN useradd -s /bin/bash -m docker \
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
-  software-properties-common \
-  dirmngr \
-  ed \
-  gpg-agent \
-  less \
-  locales \
-  vim-tiny \
-  wget \
+#   software-properties-common \
+#   dirmngr \
+#   ed \
+#   gpg-agent \
+#   less \
+#   locales \
+#   vim-tiny \
+#   wget \
   ca-certificates
-RUN wget -q -O - https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc \
-    | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc  \
-  && add-apt-repository --yes "ppa:marutter/rrutter4.0" \
-  && add-apt-repository --yes "ppa:c2d4u.team/c2d4u4.0+" \
-  && add-apt-repository --yes "ppa:edd/misc"
+# RUN wget -q -O - https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc \
+#     | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc  \
+#   && add-apt-repository --yes "ppa:marutter/rrutter4.0" \
+#   && add-apt-repository --yes "ppa:c2d4u.team/c2d4u4.0+" \
+#   && add-apt-repository --yes "ppa:edd/misc"
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  locales \
+  pandoc \
+  curl \
+  libcurl4-openssl-dev \
+  gdebi-core \
+  && rm -rf /var/lib/apt/lists/*
+
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
   && locale-gen en_US.utf8 \
   && /usr/sbin/update-locale LANG=en_US.UTF-8
@@ -43,12 +51,6 @@ ENV TZ UTC
 
 
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-  pandoc \
-  curl \
-  libcurl4-openssl-dev \
-  gdebi-core \
-  && rm -rf /var/lib/apt/lists/*
 
 ARG QUARTO_VERSION="1.5.57"
 RUN curl -o quarto-linux-amd64.deb -L https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb
