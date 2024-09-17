@@ -1,4 +1,4 @@
-name: CI
+name: build-quarto-pages
 on:
   push:
     branches: [ main ]
