@@ -12,3 +12,9 @@ clear exactly how to connect volumes to the container via the action, so I
 abandoned that concept and went with the `jobs.<id>.container` directive to run
 all of the steps of a job inside of the container, which is connected to the
 source repo itself and appears to use all of the regular actions as usual.
+
+## 2024-09-26
+
+The build and push worked with the R Markdown docker container, but it was
+large. I decided to go with a quarto container.... which happily worked with
+the old container. 
