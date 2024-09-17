@@ -20,4 +20,4 @@ RUN useradd -s /bin/bash -m docker \
 COPY _quarto.yml /static/_quarto.yml
 COPY resources/ /static/resources/
 COPY forecast.qmd /static/
-CMD ["bash"]
+ENTRYPOINT ['sh', 'entrypoint.sh']
