@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import os
-import pem
 import json
 import string
 import random
@@ -20,16 +19,15 @@ def read_pem():
     pemf = os.environ["PRIVATE_KEY"]
     if os.path.isfile(pemf):
         with open(pemf, 'rb') as f:
-            fil = f.read()
+            cert = f.read()
     else:
-        fil = pemf
-    cert = pem.parse(fil)
+        cert = pemf
     return cert
 
 
 def get_installation():
     # Auth dance
-    cert = read_pem()[0]
+    cert = read_pem()
     auth = Auth.AppAuth(os.environ["APP_ID"], str(cert))
     gi = GithubIntegration(auth = auth)
     return gi
