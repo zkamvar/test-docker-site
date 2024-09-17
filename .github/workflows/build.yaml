@@ -16,6 +16,7 @@ jobs:
       slug: ${{ steps.repos.outputs.slug }}
       id: ${{ steps.repos.outputs.id }}
       email: ${{ steps.repos.outputs.email }}
+      token: ${{ steps.token.outputs.token }}
     steps:
       - id: checkout
         uses: actions/checkout@v4
@@ -23,6 +24,8 @@ jobs:
         run: pip install -r requirements.txt
       - id: repos
         run: python getInstallations.py
+      - id: token
+        run: python getToken.py
   build:
     runs-on: ubuntu-latest
     container:
@@ -59,10 +62,10 @@ jobs:
         run: |
           echo "${{ needs.repos.outputs.repos }}"
           cd pages
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor_id}}+${{ github.actor }}@users.noreply.github.com"
+          git config --global user.name "${{ needs.repos.outputs.slug }}[bot]"
+          git config --global user.email "${{ needs.repos.outputs.email }}"
           git remote set-url origin \
-          https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          https://${{ needs.repos.outputs.slug }}[bot]:${{ needs.repos.outputs.token }}@github.com/${{ github.repository }}.git
           ls
           git status
           # remove everything in the old site
