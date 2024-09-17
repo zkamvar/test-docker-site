@@ -44,9 +44,9 @@ def get_slug_id():
     rid = id_generator()
     if os.path.isfile(ghoutput):
         with open(ghoutput, 'a') as f:
-            f.write(f'slug="{app.slug}"\n')
-            f.write(f'id="{app.id}"\n')
-            f.write(f'email="{email}"\n')
+            f.write(f'slug={app.slug}\n')
+            f.write(f'id={app.id}\n')
+            f.write(f'email={email}\n')
             f.close()
 
 
@@ -79,6 +79,6 @@ def get_token():
     rid = id_generator()
     if os.path.isfile(ghoutput):
         with open(ghoutput, 'a') as f:
-            f.write(f'token="{token.token}"\n')
+            f.write(f'token={token.token}\n')
             f.close()
 
