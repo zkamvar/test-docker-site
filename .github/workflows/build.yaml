@@ -35,7 +35,7 @@ jobs:
       - id: checkout
         uses: actions/checkout@v4
       - id: build
-        run: quarto render
+        run: cp -R /static/* . && quarto render
       - name: Upload artifact
         id: upload
         uses: actions/upload-artifact@v4

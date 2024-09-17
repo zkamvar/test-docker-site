@@ -17,4 +17,7 @@ RUN useradd -s /bin/bash -m docker \
   && wget https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb \
   && dpkg -i quarto-*-linux-amd64.deb
 
+COPY _quarto.yml /static/_quarto.yml
+COPY resources/ /static/resources/
+COPY forecast.qmd /static/
 CMD ["bash"]
