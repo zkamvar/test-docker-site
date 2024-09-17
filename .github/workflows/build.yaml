@@ -57,7 +57,7 @@ jobs:
           name: 'site'
       - id: publish
         run: |
-          echo "${{ needs.repos.outputs.email }}"
+          echo "${{ needs.repos.outputs.repos }}"
           cd pages
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor_id}}+${{ github.actor }}@users.noreply.github.com"
