@@ -19,5 +19,4 @@ RUN useradd -s /bin/bash -m docker \
 
 COPY static /static
 COPY render.sh render.sh
-COPY entrypoint.sh entrypoint.sh
-ENTRYPOINT ["sh", "entrypoint.sh"]
+CMD ["bash"]
