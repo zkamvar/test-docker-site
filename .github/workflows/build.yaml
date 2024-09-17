@@ -35,7 +35,7 @@ jobs:
       - id: checkout
         uses: actions/checkout@v4
       - id: build
-        run: ls /site && quarto render /site
+        run: bash render.sh
       - name: Upload artifact
         id: upload
         uses: actions/upload-artifact@v4

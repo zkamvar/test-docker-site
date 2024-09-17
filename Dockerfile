@@ -18,5 +18,6 @@ RUN useradd -s /bin/bash -m docker \
   && dpkg -i quarto-*-linux-amd64.deb
 
 COPY static /static
+COPY render.sh render.sh
 COPY entrypoint.sh entrypoint.sh
 ENTRYPOINT ["sh", "entrypoint.sh"]
