@@ -9,13 +9,12 @@ RUN useradd -s /bin/bash -m docker \
   && apt-get update && apt-get install -y --no-install-recommends \
   ca-certificates \
   locales \
-  pandoc \
-  curl \
+  wget \
   && rm -rf /var/lib/apt/lists/* \
   && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
   && locale-gen en_US.utf8 \
   && /usr/sbin/update-locale LANG=en_US.UTF-8 \
-  && curl -o quarto-linux-amd64.deb -L https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb \
-  && dpkg -i quarto-linux-amd64.deb
+  && wget https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb \
+  && dpkg -i quarto-*-linux-amd64.deb
 
 CMD ["bash"]
