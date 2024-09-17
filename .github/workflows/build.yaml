@@ -35,7 +35,7 @@ jobs:
       - id: checkout
         uses: actions/checkout@v4
       - id: build
-        run: bash render.sh
+        run: ls /site && bash render.sh && tree /site
       - name: Upload artifact
         id: upload
         uses: actions/upload-artifact@v4
