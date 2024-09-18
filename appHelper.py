@@ -34,18 +34,20 @@ def get_installation():
 
 def get_slug_id():
     ghapp = get_installation()
+    installation = ghapp.get_installations()[0]
+    gh = installation.get_github_for_installation()
     app = ghapp.get_app()
-    email = f'{app.id}+{app.slug}@users.noreply.github.com'
+    app_usr = gh.get_user(app.slug+"[bot]")
+    email = f'{app_usr.id}+{app_usr.login}@users.noreply.github.com'
     # assign them to the GitHub output (which is a file whose path is assigned
     # to the GITHUB_OUTPUT variable) 
     ghoutput = os.environ.get("GITHUB_OUTPUT")
     if ghoutput is None:
         throwException("oops")
-    rid = id_generator()
     if os.path.isfile(ghoutput):
         with open(ghoutput, 'a') as f:
             f.write(f'slug={app.slug}\n')
-            f.write(f'id={app.id}\n')
+            f.write(f'id={app_usr.id}\n')
             f.write(f'email={email}\n')
             f.close()
 
