@@ -4,7 +4,7 @@ name: Create and publish a Docker image
 on:
   push:
     paths:
-      - corefast/**
+      - static/**
       - Dockerfile
       - entrypoint.sh
   workflow_dispatch:
