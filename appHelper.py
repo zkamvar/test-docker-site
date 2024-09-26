@@ -70,7 +70,7 @@ def list_repositories():
     ghapp = get_installation()
     installation = ghapp.get_installations()[0]
     # get the full names for the repositories
-    repos = [x.full_name for x in installation.get_repos()]
+    repos = [{"owner":x.owner.login, "name":x.name} for x in installation.get_repos()]
     write_json("repos", repos)
 
 def get_token():
