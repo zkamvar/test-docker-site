@@ -13,6 +13,13 @@ fiddle around with new-to-me tools... I just want something that works. In that
 light, I am going to crib from https://github.com/european-modelling-hubs/covid19-forecast-hub-europe-website,
 which uses R Markdown. 
 
+
+To test this out, make sure you have Docker running and type:
+
+```bash
+make preview
+```
+
 ### Website Builder
 
 We will build the website using [quarto](https://quarto.org), as it is one of the most flexible formats for generating static sites.
