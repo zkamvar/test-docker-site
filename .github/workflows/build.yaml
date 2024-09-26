@@ -65,7 +65,7 @@ jobs:
     steps:
       - id: id
         run: |
-          echo "${{ fromJSON(matrix.site).owner }}"
+          echo "${{ format("{0}", fromJSON(matrix.site).owner) }}"
           echo "${{ matrix.site.owner }}"
           echo "${{ matrix.site.repo }}"
       - id: checkout-tools
