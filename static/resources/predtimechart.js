@@ -49,9 +49,9 @@ fetch(`${root}/predtimechart-options.json`)
     })
     .then(function() {
         // ZNK 2024-09-16: update for bootstrap 5
-        console.log(document.getElementById("forecastVis_options"));
+        console.log(document.getElementById("forecastViz._options"));
         document.getElementById("forecastViz_options").classList.add("g-col-3");
-        console.log(document.getElementById("forecastVis_viz"));
+        console.log(document.getElementById("forecastViz._viz"));
         document.getElementById("forecastViz_viz").classList.add("g-col-9");
     });
 

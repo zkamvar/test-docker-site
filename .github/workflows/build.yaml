@@ -24,10 +24,12 @@ jobs:
         run: pip install -r requirements.txt
       - id: repos
         run: python getInstallations.py
-      - id: token
-        run: python getToken.py
   build:
     runs-on: ubuntu-latest
+    needs: [repos]
+    strategy: 
+      matrix: 
+        site: ${{ needs.repos.outputs.repos }}
     container:
       image: ghcr.io/zkamvar/test-docker-site:main
       ports:
@@ -37,30 +39,40 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.site }}
       - id: build
         run: ls /site && bash render.sh
       - name: Upload artifact
         id: upload
         uses: actions/upload-artifact@v4
         with:
-          name: 'site'
+          name: '${{ matrix.site }}'
           path: '/site/'
   push:
     runs-on: ubuntu-latest
     needs: [build, repos]
+    strategy: 
+      matrix: 
+        site: ${{ needs.repos.outputs.repos }}
     steps:
+      - id: token
+        env:
+          APP_ID: ${{ vars.APP_ID }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+        run: python getToken.py
       - id: checkout-pages
         uses: actions/checkout@v4
         with:
+          repository: ${{ matrix.site }}
           ref: gh-pages
           path: 'pages'
       - id: fetch-artifact
         uses: actions/download-artifact@v4
         with:
-          name: 'site'
+          name: '${{ matrix.site }}'
       - id: publish
         run: |
-          echo "${{ needs.repos.outputs.repos }}"
           cd pages
           git config --global user.name "${{ needs.repos.outputs.slug }}[bot]"
           git config --global user.email "${{ needs.repos.outputs.email }}"
