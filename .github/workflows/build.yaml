@@ -41,14 +41,14 @@ jobs:
       - id: checkout
         uses: actions/checkout@v4
         with:
-          repository: ${{ format("{0}/{1}", matrix.site.owner, matrix.site.name) }}
+          repository: ${{ join(toJSON(matrix.site), '/') }}
       - id: build
         run: ls -l / && ls -l /site && bash -x /render.sh
       - name: Upload artifact
         id: upload
         uses: actions/upload-artifact@v4
         with:
-          name: '${{ format("{0}-{1}", matrix.site.owner, matrix.site.name) }}'
+          name: '${{ join(matrix.site, "-") }}'
           path: '/site/pages/'
   push:
     runs-on: ubuntu-latest
@@ -81,13 +81,13 @@ jobs:
       - id: checkout-pages
         uses: actions/checkout@v4
         with:
-          repository: ${{ format("{0}/{1}", matrix.site.owner, matrix.site.name) }}
+          repository: ${{ join(matrix.site, "/") }}
           ref: gh-pages
           path: 'pages'
       - id: fetch-artifact
         uses: actions/download-artifact@v4
         with:
-          name: '${{ format("{0}-{1}", matrix.site.owner, matrix.site.name) }}'
+          name: '${{ join(matrix.site, "-") }}'
       - id: publish
         run: |
           cd pages
