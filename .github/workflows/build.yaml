@@ -41,7 +41,7 @@ jobs:
       - id: checkout
         uses: actions/checkout@v4
         with:
-          repository: ${{ join(toJSON(matrix.site), '/') }}
+          repository: ${{ join(matrix.site, '/') }}
       - id: build
         run: ls -l / && ls -l /site && bash -x /render.sh
       - name: Upload artifact
