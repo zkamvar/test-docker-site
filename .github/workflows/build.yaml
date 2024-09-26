@@ -40,8 +40,8 @@ jobs:
     steps:
       - id: id
         run: |
-          echo repo=${{ format('{0}/{1}' matrix.site.owner, matrix.site.name) }} >> $GITHUB_OUTPUT
-          echo file=${{ format('{0}-{1}' matrix.site.owner, matrix.site.name) }} >> $GITHUB_OUTPUT
+          echo repo="${{ format('{0}/{1}' matrix.site.owner, matrix.site.name) }}" >> $GITHUB_OUTPUT
+          echo file="${{ format('{0}-{1}' matrix.site.owner, matrix.site.name) }}" >> $GITHUB_OUTPUT
       - id: checkout
         uses: actions/checkout@v4
         with:
@@ -64,8 +64,8 @@ jobs:
     steps:
       - id: id
         run: |
-          echo repo=${{ format('{0}/{1}' matrix.site.owner, matrix.site.name) }} >> $GITHUB_OUTPUT
-          echo file=${{ format('{0}-{1}' matrix.site.owner, matrix.site.name) }} >> $GITHUB_OUTPUT
+          echo repo="${{ format('{0}/{1}' matrix.site.owner, matrix.site.name) }}" >> $GITHUB_OUTPUT
+          echo file="${{ format('{0}-{1}' matrix.site.owner, matrix.site.name) }}" >> $GITHUB_OUTPUT
       - id: checkout-tools
         uses: actions/checkout@v4
         with:
