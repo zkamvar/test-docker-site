@@ -43,7 +43,7 @@ jobs:
         with:
           repository: ${{ matrix.site }}
       - id: build
-        run: ls -l && ls -l /site && bash -x render.sh
+        run: ls -l / && ls -l /site && bash -x /render.sh
       - name: Upload artifact
         id: upload
         uses: actions/upload-artifact@v4
@@ -58,11 +58,26 @@ jobs:
       matrix: 
         site: ${{ fromJSON(needs.repos.outputs.repos) }}
     steps:
+      - id: checkout-tools
+        uses: actions/checkout@v4
+        with:
+          repository: zkamvar/test-docker-site
+          ref: main
+          path: 'tools'
+          sparse-checkout: |
+            getToken.py
+            appHelper.py
+            requirements.txt
+          sparse-checkout-cone-mode: false
+      - id: install-reqs
+        run: pip -r tools/requirements.txt
       - id: token
         env:
           APP_ID: ${{ vars.APP_ID }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-        run: python getToken.py
+        run: python tools/getToken.py
+      - id: cleanup
+        run: rm -rf tools/
       - id: checkout-pages
         uses: actions/checkout@v4
         with:
