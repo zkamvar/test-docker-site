@@ -1,116 +1,64 @@
-import App from 'https://cdn.jsdelivr.net/gh/reichlab/predtimechart@2.0.9/dist/predtimechart.bundle.js';
+import App from 'https://cdn.jsdelivr.net/gh/reichlab/predtimechart@2.0.10/dist/predtimechart.bundle.js';
+document.predtimechart = App;  // for debugging
 
-const covid19ForecastsVizTestOptions = {
-    "available_as_ofs": {
-        "week_ahead_incident_deaths": ["2022-01-22", "2022-01-29"],
-        "day_ahead_incident_hospitalizations": ["2022-01-22", "2022-01-29"]
-    },
-    "current_date": "2022-01-29",
-    "disclaimer": "Most forecasts have failed to reliably predict rapid changes in the trends of reported cases and hospitalizations. Due to this limitation, they should not be relied upon for decisions about the possibility or timing of rapid changes in trends.",
-    "initial_as_of": "2022-01-29",
-    "initial_checked_models": ["COVIDhub-baseline", "COVIDhub-ensemble"],
-    "initial_interval": "95%",
-    "initial_target_var": "week_ahead_incident_deaths",
-    "initial_task_ids": {"scenario_id": "1", "location": "48"},
-    "initial_xaxis_range": null,
-    "initial_yaxis_range": null,
-    "intervals": ["0%", "50%", "95%"],
-    "models": ["COVIDhub-ensemble", "COVIDhub-baseline", "Empty-model"],
-    "target_variables": [
-        {
-            "value": "week_ahead_incident_deaths",
-            "text": "week ahead incident deaths",
-            "plot_text": "week ahead incident deaths"
-        },
-        {
-            "value": "day_ahead_incident_hospitalizations",
-            "text": "day ahead incident hospitalizations",
-            "plot_text": "day ahead incident hospitalizations"
-        }],
-    "task_ids": {
-        "scenario_id": [{"value": "1", "text": "scenario 1"}, {"value": "2", "text": "scenario 2"}],
-        "location": [{"value": "48", "text": "Texas"}, {"value": "US", "text": "US"}]
-    },
-};
+function replace_chars(the_string) {
+    // replace all non-alphanumeric characters, except dashes and underscores, with a dash
+    return the_string.replace(/[^a-zA-Z0-9-_]/g, '-');
+}
+
+const root = "https://raw.githubusercontent.com/hubverse-org/hub-dashboard-predtimechart/refs/heads/main/demo/";
 
 // a simple fetchData() that hard-codes truth and forecast data for two reference_dates
 function _fetchData(isForecast, targetKey, taskIDs, referenceDate) {
-    console.debug('_fetchData():', isForecast, targetKey, taskIDs, referenceDate);
-    const isForecastToRefDateToData = {
-        true: {
-            // https://zoltardata.com/api/project/316/viz-data/?is_forecast=true&target_key=week_ahead_incident_deaths&unit_abbrev=48&reference_date=2022-01-22 :
-            '2022-01-22': {
-                "COVIDhub-baseline": {
-                    "target_end_date": ["2022-01-29", "2022-02-05"],
-                    "q0.025": [349.675, 210.819212192122],
-                    "q0.25": [855.75, 766.364243642436],
-                    "q0.5": [971, 971],
-                    "q0.75": [1086.25, 1175.66223912239],
-                    "q0.975": [1592.325, 1732.05851683517]
-                },
-                "COVIDhub-ensemble": {
-                    "target_end_date": ["2022-01-29", "2022-02-05"],
-                    "q0.025": [737, 774],
-                    "q0.25": [898, 993],
-                    "q0.5": [1026, 1181],
-                    "q0.75": [1158, 1354],
-                    "q0.975": [1455, 1826]
-                }
-            },
+    // ex taskIDs: {"scenario_id": "A-2022-05-09", "location": "US"} . NB: key order not sorted
+    console.info("_fetchData(): entered.", isForecast, `"${targetKey}"`, taskIDs, `"${referenceDate}"`);
 
-            // https://zoltardata.com/api/project/316/viz-data/?is_forecast=true&target_key=week_ahead_incident_deaths&unit_abbrev=48&reference_date=2022-01-29 :
-            '2022-01-29': {
-                "COVIDhub-baseline": {
-                    "target_end_date": ["2022-02-05", "2022-02-12"],
-                    "q0.025": [590.675, 446.981771067711],
-                    "q0.25": [1089.25, 1003.57023320233],
-                    "q0.5": [1212, 1212],
-                    "q0.75": [1334.75, 1421.13823138231],
-                    "q0.975": [1833.325, 1973.59632346323]
-                },
-                "COVIDhub-ensemble": {
-                    "target_end_date": ["2022-02-05", "2022-02-12"],
-                    "q0.025": [738, 801],
-                    "q0.25": [1111, 1152],
-                    "q0.5": [1198, 1321],
-                    "q0.75": [1387, 1494],
-                    "q0.975": [1727, 1944]
-                }
-            },
-        },
-        false: {
-            // https://zoltardata.com/api/project/316/viz-data/?is_forecast=false&target_key=week_ahead_incident_deaths&unit_abbrev=48&reference_date=2022-01-22 :
-            '2022-01-22': {
-                "date": ["2021-12-18", "2021-12-25", "2022-01-01", "2022-01-08", "2022-01-15", "2022-01-22"],
-                "y": [478.0, 266.0, 422.0, 717.0, 623.0, 971.0]
-            },
+    const targetKeyStr = replace_chars(targetKey);
 
-            // https://zoltardata.com/api/project/316/viz-data/?is_forecast=false&target_key=week_ahead_incident_deaths&unit_abbrev=48&reference_date=2022-01-29 :
-            '2022-01-29': {
-                "date": ["2021-12-18", "2021-12-25", "2022-01-01", "2022-01-08", "2022-01-15", "2022-01-22", "2022-01-29"],
-                "y": [478.0, 266.0, 422.0, 717.0, 623.0, 971.0, 1212.0]
-            },
-        }
+    // get .json file name: 1) get taskIDs values ordered by sorted keys, 2) clean up ala `json_file_name()`
+    const taskIDsValsSorted = Object.keys(taskIDs).sort().map(key => taskIDs[key]);
+    const taskIDsValsStr = replace_chars(taskIDsValsSorted.join(' '));
+
+    let target_path;
+    const file_name = `${targetKeyStr}_${taskIDsValsStr}_${referenceDate}.json`;
+    if (isForecast) {
+        // target_path = `./static/data/forecasts/${file_name}`;
+        target_path = `${root}/${file_name}`;
+    } else {
+        // target_path = `./static/data/truth/${file_name}`;
+        console.warn("_fetchData(): target/truth data is currently unavailable");
+        return new Promise((resolve) => {
+            console.info("_fetchData(): resolving");
+            resolve({
+                json: () => Promise.resolve({})
+            });
+        });
     }
-
-    // return data as a Promise<Response>
-    const data = isForecastToRefDateToData[isForecast][referenceDate];
-    if (data === undefined) {
-        throw `no data found for inputs: isForecast=${isForecast}, referenceDate=${referenceDate}`
-    }
-
-    return new Promise((resolve, reject) => {
-        resolve(new Response(JSON.stringify(data)));
-    });
+    return fetch(target_path);  // Promise
 }
 
-// componentDiv, _fetchData, isIndicateRedraw, options, _calcUemForecasts:
-App.initialize('forecastViz_row', _fetchData, false, covid19ForecastsVizTestOptions, null);
 
-// ZNK 2024-09-16: update for bootstrap 5
-document.addEventListener('DOMContentLoaded', function() {
-  var opts = document.getElementById("forecastViz_options");
-  var viz  = document.getElementById("forecastViz_viz");
-  opts.classList.add("g-col-3");
-  viz.classList.add("g-col-9");
-})
+// load options and then initialize the component
+fetch(`${root}/predtimechart-options.json`)
+    .then(response => response.json())
+    .then((data) => {
+        console.info("fetch(): done. calling App.initialize().", data);
+
+        // componentDiv, _fetchData, isIndicateRedraw, options, _calcUemForecasts:
+        App.initialize('forecastViz_row', _fetchData, false, data, null);
+    })
+    .then(function() {
+        // ZNK 2024-09-16: update for bootstrap 5
+        console.log(document.getElementById("forecastVis_options"));
+        document.getElementById("forecastViz_options").classList.add("g-col-3");
+        console.log(document.getElementById("forecastVis_viz"));
+        document.getElementById("forecastViz_viz").classList.add("g-col-9");
+    });
+
+window.addEventListener('DOMContentLoaded', function() {
+  document.getElementById("forecastViz_options").classList.add("g-col-3");
+  document.getElementById("forecastViz_viz").classList.add("g-col-9");
+});
+
+
+
