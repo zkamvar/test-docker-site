@@ -43,75 +43,75 @@ jobs:
           echo "${{ matrix.site }}"
           echo "${{ matrix.site.owner }}"
           echo "${{ matrix.site.repo }}"
-      - id: checkout
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ steps.id.output.repo }}
-      - id: build
-        run: ls -l / && ls -l /site && bash -x /render.sh
-      - name: Upload artifact
-        id: upload
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ steps.id.output.file }}
-          path: '/site/pages/'
-  push:
-    runs-on: ubuntu-latest
-    needs: [build, repos]
-    continue-on-error: true
-    strategy: 
-      matrix: 
-        site: ${{ fromJSON(needs.repos.outputs.repos) }}
-    steps:
-      - id: id
-        run: |
-          echo "${{ format("{0}", fromJSON(matrix.site).owner) }}"
-          echo "${{ matrix.site.owner }}"
-          echo "${{ matrix.site.repo }}"
-      - id: checkout-tools
-        uses: actions/checkout@v4
-        with:
-          repository: zkamvar/test-docker-site
-          ref: main
-          path: 'tools'
-          sparse-checkout: |
-            getToken.py
-            appHelper.py
-            requirements.txt
-          sparse-checkout-cone-mode: false
-      - id: install-reqs
-        run: pip -r tools/requirements.txt
-      - id: token
-        env:
-          APP_ID: ${{ vars.APP_ID }}
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-        run: python tools/getToken.py
-      - id: cleanup
-        run: rm -rf tools/
-      - id: checkout-pages
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ steps.id.output.repo }}
-          ref: gh-pages
-          path: 'pages'
-      - id: fetch-artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ steps.id.output.file }}
-      - id: publish
-        run: |
-          cd pages
-          git config --global user.name "${{ needs.repos.outputs.slug }}[bot]"
-          git config --global user.email "${{ needs.repos.outputs.email }}"
-          git remote set-url origin \
-          https://${{ needs.repos.outputs.slug }}[bot]:${{ needs.repos.outputs.token }}@github.com/${{ github.repository }}.git
-          ls
-          git status
-          # remove everything in the old site
-          git rm -r "*" || echo "nothing to do"
-          cp -R ../_site/* .
-          touch .nojekyll
-          git add . && git commit --amend -m 'deploy' && git push --force
+      # - id: checkout
+      #   uses: actions/checkout@v4
+      #   with:
+      #     repository: ${{ steps.id.output.repo }}
+      # - id: build
+      #   run: ls -l / && ls -l /site && bash -x /render.sh
+      # - name: Upload artifact
+      #   id: upload
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: ${{ steps.id.output.file }}
+      #     path: '/site/pages/'
+  # push:
+  #   runs-on: ubuntu-latest
+  #   needs: [build, repos]
+  #   continue-on-error: true
+  #   strategy: 
+  #     matrix: 
+  #       site: ${{ fromJSON(needs.repos.outputs.repos) }}
+  #   steps:
+  #     - id: id
+  #       run: |
+  #         echo "${{ format("{0}", fromJSON(matrix.site).owner) }}"
+  #         echo "${{ matrix.site.owner }}"
+  #         echo "${{ matrix.site.repo }}"
+  #     - id: checkout-tools
+  #       uses: actions/checkout@v4
+  #       with:
+  #         repository: zkamvar/test-docker-site
+  #         ref: main
+  #         path: 'tools'
+  #         sparse-checkout: |
+  #           getToken.py
+  #           appHelper.py
+  #           requirements.txt
+  #         sparse-checkout-cone-mode: false
+  #     - id: install-reqs
+  #       run: pip -r tools/requirements.txt
+  #     - id: token
+  #       env:
+  #         APP_ID: ${{ vars.APP_ID }}
+  #         PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+  #       run: python tools/getToken.py
+  #     - id: cleanup
+  #       run: rm -rf tools/
+  #     - id: checkout-pages
+  #       uses: actions/checkout@v4
+  #       with:
+  #         repository: ${{ steps.id.output.repo }}
+  #         ref: gh-pages
+  #         path: 'pages'
+  #     - id: fetch-artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: ${{ steps.id.output.file }}
+  #     - id: publish
+  #       run: |
+  #         cd pages
+  #         git config --global user.name "${{ needs.repos.outputs.slug }}[bot]"
+  #         git config --global user.email "${{ needs.repos.outputs.email }}"
+  #         git remote set-url origin \
+  #         https://${{ needs.repos.outputs.slug }}[bot]:${{ needs.repos.outputs.token }}@github.com/${{ github.repository }}.git
+  #         ls
+  #         git status
+  #         # remove everything in the old site
+  #         git rm -r "*" || echo "nothing to do"
+  #         cp -R ../_site/* .
+  #         touch .nojekyll
+  #         git add . && git commit --amend -m 'deploy' && git push --force
 
   
 
