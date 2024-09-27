@@ -41,6 +41,7 @@ jobs:
       - id: id
         run: |
           echo "${{ matrix.site.owner }}"
+          echo "${{ matrix.site.name }}"
       # - id: checkout
       #   uses: actions/checkout@v4
       #   with:
