@@ -40,7 +40,7 @@ jobs:
     steps:
       - id: id
         run: |
-          echo "${{ format('{0}', matrix.site) }}"
+          echo "${{ matrix.site.owner }}"
       # - id: checkout
       #   uses: actions/checkout@v4
       #   with:
