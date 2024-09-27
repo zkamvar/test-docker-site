@@ -47,14 +47,14 @@ jobs:
       - id: checkout
         uses: actions/checkout@v4
         with:
-          repository: ${{ steps.id.output.repo }}
+          repository: ${{ steps.id.outputs.repo }}
       - id: build
         run: ls -l / && ls -l /site && bash -x /render.sh
       - name: Upload artifact
         id: upload
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.id.output.file }}
+          name: ${{ steps.id.outputs.file }}
           path: '/site/pages/'
   push:
     runs-on: ubuntu-latest
@@ -93,13 +93,13 @@ jobs:
       - id: checkout-pages
         uses: actions/checkout@v4
         with:
-          repository: ${{ steps.id.output.repo }}
+          repository: ${{ steps.id.outputs.repo }}
           ref: gh-pages
           path: 'pages'
       - id: fetch-artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{ steps.id.output.file }}
+          name: ${{ steps.id.outputs.file }}
       - id: publish
         run: |
           cd pages
