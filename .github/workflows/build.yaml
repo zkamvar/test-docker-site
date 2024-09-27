@@ -40,9 +40,16 @@ jobs:
     steps:
       - id: id
         run: |
-          echo "${{ matrix.site }}"
-          echo "${{ matrix.site.owner }}"
-          echo "${{ matrix.site.repo }}"
+          echo "${{ fromJSON(matrix.site) }}"
+          echo "${{ toJSON(matrix.site) }}"
+          echo "${{ fromJSON(matrix.site.owner) }}"
+          echo "${{ toJSON(matrix.site.owner) }}"
+          echo "${{ fromJSON(matrix.site.repo) }}"
+          echo "${{ toJSON(matrix.site.repo) }}"
+          echo "${{ fromJSON(matrix.site).owner }}"
+          echo "${{ toJSON(matrix.site).owner }}"
+          echo "${{ fromJSON(matrix.site).repo }}"
+          echo "${{ toJSON(matrix.site).repo }}"
       # - id: checkout
       #   uses: actions/checkout@v4
       #   with:
