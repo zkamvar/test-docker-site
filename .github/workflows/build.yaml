@@ -105,7 +105,7 @@ jobs:
         run: |
           exists=$(gh api -X GET "repos/${{ steps.id.outputs.repo }}/branches" --jq '.[].name | select(. == "gh-pages")')
           if [[ "$exists" != "gh-pages" ]]; then
-            tmp=$(mktemp -p)
+            tmp=$(mktemp --directory)
             cd "$tmp"
             git init
             git switch -c gh-pages
