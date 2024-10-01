@@ -56,8 +56,13 @@ fetch(`${root}/predtimechart-options.json`)
     });
 
 window.addEventListener('DOMContentLoaded', function() {
-  document.getElementById("forecastViz_options").classList.add("g-col-3");
-  document.getElementById("forecastViz_viz").classList.add("g-col-9");
+  var divs = document.querySelectorAll("div[class^='col-md']");
+  for (var div of divs) {
+    if (div.className.match("g-col") == null) {
+      var n = div.className.match("col-md-(.{1,2})")[1];
+      div.addClass("g-col-"+n);
+    }
+  }
 });
 
 
