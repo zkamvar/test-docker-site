@@ -103,8 +103,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         name: "check for gh-pages branch and create if needed"
         run: |
-          exists=$(gh api -X GET "repos/${{ steps.id.outputs.repo }}/branches/gh-pages" --jq .status==null)
-          if [[ "$exists" == "false" ]]; then
+          exists=$(gh api -X GET "repos/${{ steps.id.outputs.repo }}/branches" --jq '.[].name | select(. == "gh-pages")')
+          if [[ "$exists" != "gh-pages" ]]; then
             tmp=$(mktemp -p)
             cd "$tmp"
             git init
