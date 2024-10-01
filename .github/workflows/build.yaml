@@ -113,6 +113,8 @@ jobs:
             git switch -c gh-pages
             git remote add origin \
             https://${{ needs.repos.outputs.slug }}[bot]:${{ needs.repos.outputs.token }}@github.com/${{ github.repository }}.git
+            git remote set-url origin \
+            https://${{ needs.repos.outputs.slug }}[bot]:${{ needs.repos.outputs.token }}@github.com/${{ github.repository }}.git
             git commit --allow-empty -m 'initial gh-pages commit'
             git push --set-upstream origin gh-pages
             cd
