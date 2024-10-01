@@ -140,7 +140,9 @@ jobs:
           git rm -r "*" || echo "nothing to do"
           cp -R ../_site/* .
           touch .nojekyll
-          git add . && git commit --amend -m 'deploy' && git push --force
+          git add . && git commit --amend -m 'deploy'
+          git status
+          git push --force
 
   
 
