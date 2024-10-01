@@ -53,7 +53,7 @@ fetch(`${root}/predtimechart-options.json`)
         for (var div of divs) {
           if (div.className.match("g-col") == null) {
             var n = div.className.match("col-md-(.{1,2})")[1];
-            div.addClass("g-col-"+n);
+            div.classList.add("g-col-"+n);
           }
         }
     });
@@ -63,7 +63,7 @@ window.addEventListener('DOMContentLoaded', function() {
   for (var div of divs) {
     if (div.className.match("g-col") == null) {
       var n = div.className.match("col-md-(.{1,2})")[1];
-      div.addClass("g-col-"+n);
+      div.classList.add("g-col-"+n);
     }
   }
 });
