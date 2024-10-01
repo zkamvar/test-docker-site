@@ -123,6 +123,7 @@ jobs:
           repository: ${{ steps.id.outputs.repo }}
           ref: gh-pages
           path: 'pages'
+          token: ${{ steps.token.outputs.token }}
       - id: fetch-artifact
         uses: actions/download-artifact@v4
         with:
