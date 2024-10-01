@@ -90,7 +90,7 @@ jobs:
             requirements.txt
           sparse-checkout-cone-mode: false
       - id: install-reqs
-        run: pip -r tools/requirements.txt
+        run: pip install -r tools/requirements.txt
       - id: token
         env:
           APP_ID: ${{ vars.APP_ID }}
