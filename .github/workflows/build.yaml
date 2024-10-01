@@ -99,6 +99,8 @@ jobs:
       - id: cleanup
         run: rm -rf tools/
       - id: check-branch
+        env:
+          GH_TOKEN: ${{ needs.repos.outputs.token }}
         name: "check for gh-pages branch and create if needed"
         run: |
           exists=$(gh api -X GET "repos/${{ steps.id.outputs.repo }}/branches/gh-pages" --jq .status==null)
