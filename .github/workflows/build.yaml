@@ -112,7 +112,7 @@ jobs:
             git init
             git switch -c gh-pages
             git remote add origin \
-            https://${{ needs.repos.outputs.slug }}[bot]:${{ steps.token.outputs.token }}@github.com/${{ github.repository }}.git
+            https://${{ needs.repos.outputs.slug }}[bot]:${{ steps.token.outputs.token }}@github.com/${{ steps.id.outputs.repo }}.git
             git commit --allow-empty -m 'initial gh-pages commit'
             git push --set-upstream origin gh-pages
             cd
@@ -133,7 +133,7 @@ jobs:
           git config --global user.name "${{ needs.repos.outputs.slug }}[bot]"
           git config --global user.email "${{ needs.repos.outputs.email }}"
           git remote set-url origin \
-          https://${{ needs.repos.outputs.slug }}[bot]:${{ steps.token.outputs.token }}@github.com/${{ github.repository }}.git
+          https://${{ needs.repos.outputs.slug }}[bot]:${{ steps.token.outputs.token }}@github.com/${{ steps.id.outputs.repo }}.git
           ls
           git status
           # remove everything in the old site
