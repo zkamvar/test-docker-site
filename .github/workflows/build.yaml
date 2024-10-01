@@ -98,6 +98,23 @@ jobs:
         run: python tools/getToken.py
       - id: cleanup
         run: rm -rf tools/
+      - id: check-branch
+        name: "check for gh-pages branch and create if needed"
+        run: |
+          exists=$(gh api -X GET "repos/${{ steps.id.outputs.repo }}/branches/gh-pages" --jq .status==null)
+          if [[ "$exists" == "false" ]]; then
+            tmp=$(mktemp -p)
+            cd "$tmp"
+            git init
+            git switch -c gh-pages
+            git config --global user.name "${{ needs.repos.outputs.slug }}[bot]"
+            git config --global user.email "${{ needs.repos.outputs.email }}"
+            git remote add origin \
+            https://${{ needs.repos.outputs.slug }}[bot]:${{ needs.repos.outputs.token }}@github.com/${{ github.repository }}.git
+            git commit --allow-empty -m 'initial gh-pages commit'
+            git push --set-upstream origin gh-pages
+            cd
+          fi
       - id: checkout-pages
         uses: actions/checkout@v4
         with:
