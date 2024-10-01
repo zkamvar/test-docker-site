@@ -57,7 +57,7 @@ jobs:
           ls -l /site/
           echo "pages"
           ls -l /site/pages/
-          bash -x /render.sh
+          bash -x $(pwd)/render.sh
       - name: Upload artifact
         id: upload
         uses: actions/upload-artifact@v4
