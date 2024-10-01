@@ -49,10 +49,13 @@ fetch(`${root}/predtimechart-options.json`)
     })
     .then(function() {
         // ZNK 2024-09-16: update for bootstrap 5
-        console.log(document.getElementById("forecastViz._options"));
-        document.getElementById("forecastViz_options").classList.add("g-col-3");
-        console.log(document.getElementById("forecastViz._viz"));
-        document.getElementById("forecastViz_viz").classList.add("g-col-9");
+        var divs = document.querySelectorAll("div[class^='col-md']");
+        for (var div of divs) {
+          if (div.className.match("g-col") == null) {
+            var n = div.className.match("col-md-(.{1,2})")[1];
+            div.addClass("g-col-"+n);
+          }
+        }
     });
 
 window.addEventListener('DOMContentLoaded', function() {
