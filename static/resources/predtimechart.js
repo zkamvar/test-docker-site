@@ -6,7 +6,7 @@ function replace_chars(the_string) {
     return the_string.replace(/[^a-zA-Z0-9-_]/g, '-');
 }
 
-const root = "https://raw.githubusercontent.com/hubverse-org/hub-dashboard-predtimechart/refs/heads/main/demo/";
+const root = "{ROOT}";
 
 // a simple fetchData() that hard-codes truth and forecast data for two reference_dates
 function _fetchData(isForecast, targetKey, taskIDs, referenceDate) {
