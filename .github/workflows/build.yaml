@@ -83,6 +83,8 @@ jobs:
         with:
           app-id: ${{ vars.APP_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
+          owner: ${{ matrix.site.owner }}
+          repositories: ${{ matrix.site.name }}
       - id: cleanup
         run: rm -rf tools/
       - id: check-branch
