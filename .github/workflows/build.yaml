@@ -78,8 +78,6 @@ jobs:
           name="${{ matrix.site.name }}"
           echo "repo=$owner/$name" >> $GITHUB_OUTPUT
           echo "file=$owner-$name" >> $GITHUB_OUTPUT
-      - id: install-reqs
-        run: pip install -r tools/requirements.txt
       - uses: actions/create-github-app-token@v1
         id: token
         with:
