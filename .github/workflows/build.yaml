@@ -82,11 +82,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         name: "check for gh-pages branch and create if needed"
         run: | 
-          bash scripts/check-gh-pages.sh \
-            ${{ steps.id.outputs.repo }} \
-            ${{ needs.repos.outputs.slug }} \
-            ${{ needs.repos.outputs.email }} \
-            ${{ steps.token.outputs.token }}
+          src="https://raw.githubusercontent.com/${{ github.repostiory }}/refs/heads/main/"
+          bash "${src}/scripts/check-gh-pages.sh" \
+            "${{ steps.id.outputs.repo }}" \
+            "${{ needs.repos.outputs.slug }}" \
+            "${{ needs.repos.outputs.email }}" \
+            "${{ steps.token.outputs.token }}"
       - id: checkout-pages
         uses: actions/checkout@v4
         with:
