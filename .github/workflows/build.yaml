@@ -49,15 +49,7 @@ jobs:
         with:
           repository: ${{ steps.id.outputs.repo }}
       - id: build
-        run: |
-          pwd
-          echo "home"
-          ls -l /
-          echo "site"
-          ls -l /site/
-          echo "pages"
-          ls -l /site/pages/
-          bash -x /render.sh
+        run: bash -x /render.sh
       - name: Upload artifact
         id: upload
         uses: actions/upload-artifact@v4
@@ -85,27 +77,16 @@ jobs:
           private-key: ${{ secrets.PRIVATE_KEY }}
           owner: ${{ matrix.site.owner }}
           repositories: ${{ matrix.site.name }}
-      - id: cleanup
-        run: rm -rf tools/
       - id: check-branch
         env:
           GH_TOKEN: ${{ github.token }}
         name: "check for gh-pages branch and create if needed"
-        run: |
-          exists=$(gh api -X GET "repos/${{ steps.id.outputs.repo }}/branches" --jq '.[].name | select(. == "gh-pages")')
-          if [[ "$exists" != "gh-pages" ]]; then
-            tmp=$(mktemp --directory)
-            cd "$tmp"
-            git config --global user.name "${{ needs.repos.outputs.slug }}[bot]"
-            git config --global user.email "${{ needs.repos.outputs.email }}"
-            git init
-            git switch -c gh-pages
-            git remote add origin \
-            https://${{ needs.repos.outputs.slug }}[bot]:${{ steps.token.outputs.token }}@github.com/${{ steps.id.outputs.repo }}.git
-            git commit --allow-empty -m 'initial gh-pages commit'
-            git push --set-upstream origin gh-pages
-            cd
-          fi
+        run: | 
+          bash scripts/check-gh-pages.sh \
+            ${{ steps.id.outputs.repo }} \
+            ${{ needs.repos.outputs.slug }} \
+            ${{ needs.repos.outputs.email }} \
+            ${{ steps.token.outputs.token }}
       - id: checkout-pages
         uses: actions/checkout@v4
         with:
