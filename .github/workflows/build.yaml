@@ -56,7 +56,8 @@ jobs:
       - id: get-repo-name
         run: |
           yq eval '.hub_url' predtimechart-config.yml \
-          | sed -e 's+https://github.com/+repo=+' >> $GITHUB_OUTPUT
+          | sed -e 's+https://github.com/+repo=+' \
+          | sed -e 's+[/]$++' >> $GITHUB_OUTPUT
       - id: clone-repo
         uses: actions/checkout@v4
         with:
