@@ -82,7 +82,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         name: "check for gh-pages branch and create if needed"
         run: | 
-          src="https://raw.githubusercontent.com/${{ github.repostiory }}/refs/heads/main/"
+          src="https://raw.githubusercontent.com/${{ github.repository }}/refs/heads/main/"
           bash "${src}/scripts/check-gh-pages.sh" \
             "${{ steps.id.outputs.repo }}" \
             "${{ needs.repos.outputs.slug }}" \
