@@ -67,7 +67,7 @@ jobs:
         run: |
           ls -larth repo/
           ls
-          hub_predtimechart --help
+          hub_predtimechart --help || UNKNOWN --help
   build:
     runs-on: ubuntu-latest
     needs: [repos]
