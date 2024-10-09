@@ -64,6 +64,11 @@ jobs:
       matrix: 
         site: ${{ fromJSON(needs.repos.outputs.repos) }}
     steps:
+      - id: checkout-this-here-repo-scripts
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            scripts
       - id: id
         run: |
           owner="${{ matrix.site.owner }}"
@@ -82,8 +87,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         name: "check for gh-pages branch and create if needed"
         run: | 
-          src="https://raw.githubusercontent.com/${{ github.repository }}/refs/heads/main"
-          bash "${src}/scripts/check-gh-pages.sh" \
+          bash "${{ github.workspace }}/scripts/check-gh-pages.sh" \
             "${{ steps.id.outputs.repo }}" \
             "${{ needs.repos.outputs.slug }}" \
             "${{ needs.repos.outputs.email }}" \
