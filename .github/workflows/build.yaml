@@ -20,10 +20,51 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            requirements.txt
+            appHelper.py
+            getInstallations.py
       - id: install
         run: pip install -r requirements.txt
       - id: repos
         run: python getInstallations.py
+  generate-ptc-data:
+    runs-on: ubuntu-latest
+    needs: [repos]
+    continue-on-error: true
+    strategy: 
+      matrix: 
+        site: ${{ fromJSON(needs.repos.outputs.repos) }}
+    steps:
+      - id: id
+        run: |
+          owner="${{ matrix.site.owner }}"
+          name="${{ matrix.site.name }}"
+          echo "repo=$owner/$name" >> $GITHUB_OUTPUT
+          echo "file=$owner-$name" >> $GITHUB_OUTPUT
+      - id: install-predtimechart-tool
+        run: |
+          pip install git+https://github.com/hubverse-org/hub-dashboard-predtimechart
+      - id: checkout-pages
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ steps.id.outputs.repo }}
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            predtimechart-config.yml
+      - id: get-repo-name
+        run: |
+          yq eval '.hub_url' predtimechart-config.yml \
+          | sed -e 's+https://github.com/+repo=+' >> $GITHUB_OUTPUT
+      - id: clone-repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ steps.get-repo-name.outputs.repo }}
+          path: 'repo'
+      - id: json-lives
+        run: |
+          hub_predtimechart --help
   build:
     runs-on: ubuntu-latest
     needs: [repos]
