@@ -14,9 +14,9 @@ if [[ "$exists" != "${branch}" ]]; then
   git config --global user.name "${slug}[bot]"
   git config --global user.email "${email}"
   git init
-  git switch -c gh-pages
+  git switch -c "${branch}"
   git remote add origin https://${slug}[bot]:${token}@github.com/${repo}.git
   git commit --allow-empty -m 'initial ${branch} commit'
-  git push --set-upstream origin gh-pages
+  git push --set-upstream origin "${branch}"
   cd
 fi
