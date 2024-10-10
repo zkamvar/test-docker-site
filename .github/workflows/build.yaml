@@ -71,7 +71,9 @@ jobs:
           ls -larth repo/
           ls -larth
           mkdir -p out/
-          hub_predtimechart repo predtimechart-config.yml out/predtimechart-options.json out
+          # remove our url
+          sed '/hub_url/d' predtimechart-config.yml > cfg.yml
+          hub_predtimechart repo cfg.yml out/predtimechart-options.json out
           ls -larth out/
   build:
     runs-on: ubuntu-latest
