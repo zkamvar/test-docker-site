@@ -218,6 +218,7 @@ jobs:
           name: ${{ steps.id.outputs.file }}
       - id: publish
         run: | 
+          ls -larth
           bash -x "${{ github.workspace }}/scripts/pushit.sh" \
             "ptc/data" \
             "${{ steps.id.outputs.repo }}" \
