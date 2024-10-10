@@ -105,7 +105,7 @@ jobs:
         with:
           repository: ${{ steps.id.outputs.repo }}
       - id: build
-        run: bash -x /render.sh
+        run: bash -x /render.sh "${{ matrix.site.owner }}" "${{ matrix.site.name }}" ptc/data
       - name: Upload artifact
         id: upload
         uses: actions/upload-artifact@v4
