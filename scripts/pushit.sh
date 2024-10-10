@@ -28,7 +28,7 @@ else
   git remote set-url origin "https://${slug}[bot]:${token}@github.com/${repo}.git"
   ls
   git status
-  cp -R ../out/* .
+  cp -R ../*.json .
   git add . && git commit -m 'update data'
   git push
 fi
