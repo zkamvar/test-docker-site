@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 branch="${1:-gh-pages}"
-repo="${1:-missing}"
-slug="${2:-missing}"
-email="${3:-missing}"
-token="${4:-missing}"
+repo="${2:-missing}"
+slug="${3:-missing}"
+email="${4:-missing}"
+token="${5:-missing}"
 
 
 exists=$(gh api -X GET "repos/${repo}/branches" --jq '.[].name | select(. == "${branch}")')
