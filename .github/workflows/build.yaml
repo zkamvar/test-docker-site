@@ -45,6 +45,8 @@ jobs:
           echo "file=$owner-$name" >> $GITHUB_OUTPUT
       - id: install-predtimechart-tool
         run: |
+          python -m venv .venv
+          source .venv/bin/activate
           pip install git+https://github.com/hubverse-org/hub-dashboard-predtimechart
       - id: checkout-pages
         uses: actions/checkout@v4
