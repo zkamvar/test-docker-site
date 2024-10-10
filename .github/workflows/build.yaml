@@ -70,6 +70,7 @@ jobs:
         run: |
           ls -larth repo/
           ls -larth
+          mkdir -p out/
           hub_predtimechart repo predtimechart-config.yml out/predtimechart-options.json out
           ls -larth out/
   build:
