@@ -68,8 +68,9 @@ jobs:
       - id: json-lives
         run: |
           ls -larth repo/
-          ls
-          hub_predtimechart --help || UNKNOWN --help
+          ls -larth
+          source .venv/bin/activate || echo "no source"
+          hub_predtimechart --help || UNKNOWN --help || hub-dashboard-predtimechart --help
   build:
     runs-on: ubuntu-latest
     needs: [repos]
