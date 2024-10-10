@@ -43,10 +43,10 @@ jobs:
           name="${{ matrix.site.name }}"
           echo "repo=$owner/$name" >> $GITHUB_OUTPUT
           echo "file=$owner-$name" >> $GITHUB_OUTPUT
+      - id: setup-snake
+        uses: actions/setup-python@v5
       - id: install-predtimechart-tool
         run: |
-          python -m venv .venv
-          source .venv/bin/activate
           pip install git+https://github.com/hubverse-org/hub-dashboard-predtimechart
       - id: checkout-pages
         uses: actions/checkout@v4
@@ -69,7 +69,6 @@ jobs:
         run: |
           ls -larth repo/
           ls -larth
-          source .venv/bin/activate || echo "no source"
           hub_predtimechart --help || UNKNOWN --help || hub-dashboard-predtimechart --help
   build:
     runs-on: ubuntu-latest
