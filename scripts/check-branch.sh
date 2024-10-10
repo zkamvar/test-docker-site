@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-branch="${1:-gh-pages}"
+branch="${1:-'gh-pages'}"
 repo="${2:-missing}"
 slug="${3:-missing}"
 email="${4:-missing}"
