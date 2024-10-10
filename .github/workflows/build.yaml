@@ -26,6 +26,10 @@ jobs:
             requirements.txt
             appHelper.py
             getInstallations.py
+      - id: setup-snake
+        uses: actions/setup-python@v5
+        with:
+          cache: pip
       - id: install
         run: pip install -r requirements.txt
       - id: repos
@@ -47,6 +51,8 @@ jobs:
           echo "file=$owner-$name-data" >> $GITHUB_OUTPUT
       - id: setup-snake
         uses: actions/setup-python@v5
+        with:
+          cache: pip
       - id: install-predtimechart-tool
         run: |
           pip install --upgrade pip
