@@ -70,7 +70,8 @@ jobs:
         run: |
           ls -larth repo/
           ls -larth
-          hub_predtimechart --help || UNKNOWN --help || hub-dashboard-predtimechart --help
+          hub_predtimechart repo predtimechart-config.yml out/predtimechart-options.json out
+          ls -larth out/
   build:
     runs-on: ubuntu-latest
     needs: [repos]
