@@ -65,11 +65,12 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             predtimechart-config.yml
+            site-config.yml
       - id: get-repo-name
         run: |
-          yq eval '.hub_url' predtimechart-config.yml \
-          | sed -e 's+https://github.com/+repo=+' \
-          | sed -e 's+[/]$++' >> $GITHUB_OUTPUT
+          yq eval '.hub' site-config.yml \
+          | sed -E -e 's+(https://github.com/|^)+repo=+' \
+          | sed -E -e 's+[/]$++' >> $GITHUB_OUTPUT
       - id: clone-repo
         uses: actions/checkout@v4
         with:
@@ -80,9 +81,11 @@ jobs:
           ls -larth repo/
           ls -larth
           mkdir -p out/
-          # remove our url
-          sed '/hub_url/d' predtimechart-config.yml > cfg.yml
-          hub_predtimechart repo cfg.yml out/predtimechart-options.json out
+          hub_predtimechart \
+            repo \
+            predtimechart-config.yml \
+            out/predtimechart-options.json \
+            out
       - name: Upload artifact
         id: upload
         uses: actions/upload-artifact@v4
