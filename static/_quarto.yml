@@ -9,14 +9,14 @@ website:
   navbar:
     left:
       - text: "HOME"
-        icon: fa-home
+        icon: home
         href: index.qmd
       - text: "Forecasts"
-        icon: fa-solid fa-chart-line
+        icon: chart-line
         href: forecast.qmd
     right:
       - href: https://github.com/hubverse-org/hub-dashboard-predtimechart
-        icon: fa-github
+        icon: github
 
 format:
   html:
