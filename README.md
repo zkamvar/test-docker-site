@@ -10,6 +10,24 @@ and---importantly---no management of github workflows.
 > hope will be the process, but I am leaving it intentionally vague and will add
 > notes where things have not yet been implemented.
 
+## Example
+
+I have created an example repository where I have a folder structure that
+contains two YAML configuration files and a folder called `pages/` that 
+contains markdown documents and assets (images). It has the
+[test-hub-dash-deployer](https://github.com/apps/test-hub-dash-deployer/installations/new)
+app installed on it. 
+
+- Hub: [hubverse-org/example-complex-forecast-hub](https://github.com/hubverse-org/example-complex-forecast-hub)
+- Dashboard Repository: [zkamvar/test-rotary-phone-turbo](https://github.com/zkamvar/test-rotary-phone-turbo)
+- Forecasts: [https://zkamvar.github.io/test-rotary-phone-turbo/forecasts.html](https://zkamvar.github.io/test-rotary-phone-turbo/forecast.html?as_of=2023-01-14&interval=95%25&target_var=wk+inc+flu+hosp&xaxis_range=2023-01-12&xaxis_range=2023-02-05&yaxis_range=-149.47282608695673&yaxis_range=21940.472826086956&model=Flusight-baseline&model=MOBS-GLEAM_FLUH&model=PSI-DICE&location=US)
+
+Every day, this repository builds the forecasts from the hub and the website
+from the dashboard repository and uses the app to publish the site. 
+
+
+## Setup (for hub admins)
+
 The steps to set up a website:
 
  1. Make a copy of the dashboard template https://github.com/zkamvar/test-rotary-phone-turbo **(template not yet created)**.
