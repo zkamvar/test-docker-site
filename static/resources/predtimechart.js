@@ -22,9 +22,7 @@ function _fetchData(isForecast, targetKey, taskIDs, referenceDate) {
     let target_path;
     const slug = `${targetKeyStr}_${taskIDsValsStr}`;
     const forecast_file_name = `${slug}_${referenceDate}.json`;
-    const today = new Date();
-    const date  = today.toISOString().split("T")[0];
-    const target_file_name = `${slug}_${date}.json`;
+    const target_file_name = `${slug}_2024-10-26.json`;
     if (isForecast) {
         // target_path = `./static/data/forecasts/${file_name}`;
         target_path = `${root}/forecasts/${forecast_file_name}`;
