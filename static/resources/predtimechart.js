@@ -20,13 +20,17 @@ function _fetchData(isForecast, targetKey, taskIDs, referenceDate) {
     const taskIDsValsStr = replace_chars(taskIDsValsSorted.join(' '));
 
     let target_path;
-    const file_name = `${targetKeyStr}_${taskIDsValsStr}_${referenceDate}.json`;
+    const slug = `${targetKeyStr}_${taskIDsValsStr}`;
+    const forecast_file_name = `${slug}_${referenceDate}.json`;
+    const today = new Date();
+    const date  = today.toISOString().split("T")[0];
+    const target_file_name = `${slug}_${date}.json`;
     if (isForecast) {
         // target_path = `./static/data/forecasts/${file_name}`;
-        target_path = `${root}/forecasts/${file_name}`;
+        target_path = `${root}/forecasts/${forecast_file_name}`;
     } else {
         // target_path = `./static/data/truth/${file_name}`;
-        target_path = `${root}/targets/${file_name}`;
+        target_path = `${root}/targets/${target_file_name}`;
     }
     return fetch(target_path);  // Pwomise?
 }
