@@ -40,7 +40,7 @@ function _fetchData(isForecast, targetKey, taskIDs, referenceDate) {
       days_to_saturday = days_to_saturday + 7;
     }
     now.setDate(now.getDate() + days_to_saturday);
-    const tagetDate = day.toISOString().split("T")[0])
+    const tagetDate = day.toISOString().split("T")[0]);
 
     const slug = `${targetKeyStr}_${taskIDsValsStr}`;
     const forecast_file_name = `${slug}_${referenceDate}.json`;
