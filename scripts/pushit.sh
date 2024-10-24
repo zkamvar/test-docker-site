@@ -6,13 +6,19 @@ slug="${3:-missing}"
 email="${4:-missing}"
 token="${5:-missing}"
 
+if [[ "$branch" == "gh-pages" ]];then
+  dir="pages"
+else
+  dir="data"
+fi
+
+cd "$dir" || (echo "Directory '$dir' not found" && exit 1)
+git config --global user.name "${slug}[bot]"
+git config --global user.email "${email}"
+git remote set-url origin "https://${slug}[bot]:${token}@github.com/${repo}.git"
+ls
+git status
 if [[ "$branch" == "gh-pages" ]]; then
-  cd pages
-  git config --global user.name "${slug}[bot]"
-  git config --global user.email "${email}"
-  git remote set-url origin "https://${slug}[bot]:${token}@github.com/${repo}.git"
-  ls
-  git status
   # remove everything in the old site
   git rm -r "*" || echo "nothing to do"
   cp -R ../_site/* .
@@ -20,15 +26,13 @@ if [[ "$branch" == "gh-pages" ]]; then
   git add . && git commit --amend -m 'deploy'
   git status
   git push --force
-  cd 
 else 
-  cd data
-  git config --global user.name "${slug}[bot]"
-  git config --global user.email "${email}"
-  git remote set-url origin "https://${slug}[bot]:${token}@github.com/${repo}.git"
-  ls
-  git status
-  cp -R ../*.json .
-  git add . && git commit -m 'update data'
-  git push
+  # remove old data
+  git rm -r "*" || echo "nothing to do"
+  cp -R ../forecasts .
+  cp -R ../targets .
+  cp ../predtimechart-options.json .
+  git add . && git commit --amend -m 'update data'
+  git push --force
 fi
+cd 

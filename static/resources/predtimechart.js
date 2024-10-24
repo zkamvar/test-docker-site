@@ -23,18 +23,12 @@ function _fetchData(isForecast, targetKey, taskIDs, referenceDate) {
     const file_name = `${targetKeyStr}_${taskIDsValsStr}_${referenceDate}.json`;
     if (isForecast) {
         // target_path = `./static/data/forecasts/${file_name}`;
-        target_path = `${root}/${file_name}`;
+        target_path = `${root}/forecasts/${file_name}`;
     } else {
         // target_path = `./static/data/truth/${file_name}`;
-        console.warn("_fetchData(): target/truth data is currently unavailable");
-        return new Promise((resolve) => {
-            console.info("_fetchData(): resolving");
-            resolve({
-                json: () => Promise.resolve({})
-            });
-        });
+        target_path = `${root}/targets/${file_name}`;
     }
-    return fetch(target_path);  // Promise
+    return fetch(target_path);  // Pwomise?
 }
 
 

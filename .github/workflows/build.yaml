@@ -83,12 +83,16 @@ jobs:
         run: |
           ls -larth repo/
           ls -larth
-          mkdir -p out/
-          hub_predtimechart \
+          mkdir -p out/targets/
+          mkdir -p out/forecasts/
+          ptc_generate_FluSight_targets \
+            repo \
+            out/targets
+          ptc_generate_json_files \
             repo \
             predtimechart-config.yml \
             out/predtimechart-options.json \
-            out
+            out/forecasts
       - name: Upload artifact
         id: upload
         uses: actions/upload-artifact@v4
