@@ -8,18 +8,6 @@ function replace_chars(the_string) {
 
 const root = "{ROOT}";
 
-function tagetDate_from_today() {
-}
-
-// def tagetDate_from_today(now: datetime = date.today()) -> datetime:
-//     # Calculate the days until the next Saturday
-//     days_to_saturday = 5 - now.weekday()
-//     if days_to_saturday < 0:
-//         days_to_saturday += 7
-
-//     # Add the calculated days to the given date
-//     return now + timedelta(days=days_to_saturday)
-// a simple fetchData() that hard-codes truth and forecast data for two tagetDates
 function _fetchData(isForecast, targetKey, taskIDs, referenceDate) {
     // ex taskIDs: {"scenario_id": "A-2022-05-09", "location": "US"} . NB: key order not sorted
     console.info("_fetchData(): entered.", isForecast, `"${targetKey}"`, taskIDs, `"${referenceDate}"`);
@@ -35,12 +23,12 @@ function _fetchData(isForecast, targetKey, taskIDs, referenceDate) {
     // the correct targets file
     var now = new Date();
     const day = now.getDay();
-    const days_to_saturday = 6 - day;
-    if (days_to_saturday < 0)
+    var days_to_saturday = 6 - day;
+    if (days_to_saturday < 0) {
       days_to_saturday = days_to_saturday + 7;
     }
     now.setDate(now.getDate() + days_to_saturday);
-    const tagetDate = day.toISOString().split("T")[0];
+    const tagetDate = now.toISOString().split("T")[0];
 
     const slug = `${targetKeyStr}_${taskIDsValsStr}`;
     const forecast_file_name = `${slug}_${referenceDate}.json`;
