@@ -8,8 +8,10 @@ token="${5:-missing}"
 
 if [[ "$branch" == "gh-pages" ]];then
   dir="pages"
+  msg="deploy"
 else
   dir="data"
+  msg="update data"
 fi
 
 cd "$dir" || (echo "Directory '$dir' not found" && exit 1)
@@ -18,21 +20,18 @@ git config --global user.email "${email}"
 git remote set-url origin "https://${slug}[bot]:${token}@github.com/${repo}.git"
 ls
 git status
+# remove old data/site contents
+git rm -r "*" || echo "nothing to do"
 if [[ "$branch" == "gh-pages" ]]; then
   # remove everything in the old site
-  git rm -r "*" || echo "nothing to do"
   cp -R ../_site/* .
   touch .nojekyll
-  git add . && git commit --amend -m 'deploy'
-  git status
-  git push --force
 else 
-  # remove old data
-  git rm -r "*" || echo "nothing to do"
   cp -R ../forecasts .
   cp -R ../targets .
   cp ../predtimechart-options.json .
-  git add . && git commit --amend -m 'update data'
-  git push --force
 fi
+git add . && git commit --amend -m "$msg"
+git status
+git push --force
 cd 

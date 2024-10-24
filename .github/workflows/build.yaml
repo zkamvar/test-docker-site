@@ -60,7 +60,7 @@ jobs:
       - id: install-predtimechart-tool
         run: |
           pip install --upgrade pip
-          pip install git+https://github.com/hubverse-org/hub-dashboard-predtimechart
+          pip install git+https://github.com/hubverse-org/hub-dashboard-predtimechart@zkamvar-patch-1
       - id: checkout-pages
         uses: actions/checkout@v4
         with:
@@ -85,7 +85,7 @@ jobs:
           ls -larth
           mkdir -p out/targets/
           mkdir -p out/forecasts/
-          ptc_generate_FluSight_targets \
+          ptc_generate_flusight_targets \
             repo \
             out/targets
           ptc_generate_json_files \
